@@ -1,0 +1,49 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel del Conductor</title>
+    <link rel="stylesheet" href="{% static 'css/empleado.css' %}">
+</head>
+<body>
+    <div class="container">
+
+        <!-- Barra lateral -->
+        <aside class="sidebar">
+            <div class="logo">
+                <span class="logo-icon">📍</span>
+                <h2>GLOBAL TRACK</h2>
+            </div>
+            <nav class="menu">
+                <a href="{% url 'inicio' %}" class="active">Inicio</a>
+                <a href="{% url 'perfil' %}">Perfil</a>
+                <a href="{% url 'reportes' %}">Reportes</a>
+                <a href="{% url 'logout' %}">Cerrar Sesión</a>
+            </nav>
+        </aside>
+
+        <!-- Contenido principal -->
+        <main class="main-content">
+            <h1>MENÚ DEL CONDUCTOR</h1>
+
+            <div class="options">
+                <div class="card orange">
+                    <span class="icon">📍</span>
+                    <p>RUTA ACTUAL</p>
+                </div>
+                <div class="card white">
+                    <span class="icon">🚗</span>
+                    <p>HISTORIAL DE VIAJES</p>
+                </div>
+            </div>
+
+            <div class="gps-status">
+                <span class="dot"></span> GPS CONECTADO
+            </div>
+        </main>
+
+    </div>
+</body>
+</html>

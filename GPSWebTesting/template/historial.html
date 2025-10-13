@@ -1,0 +1,84 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Historial de Viajes</title>
+    <link rel="stylesheet" href="{% static 'css/historial.css' %}">
+</head>
+<body>
+    <div class="container">
+
+        <!-- Barra lateral -->
+        <aside class="sidebar">
+            <div class="logo">
+                <span class="logo-icon">📍</span>
+                <h2>GLOBAL TRACK</h2>
+            </div>
+            <nav class="menu">
+                <a href="{% url 'inicio' %}">Inicio</a>
+                <a href="{% url 'perfil' %}">Perfil</a>
+                <a href="{% url 'reportes' %}" class="active">Reportes</a>
+                <a href="{% url 'logout' %}">Cerrar Sesión</a>
+            </nav>
+        </aside>
+
+        <!-- Contenido principal -->
+        <main class="main-content">
+            <h1>HISTORIAL DE VIAJES</h1>
+
+            <div class="filters">
+                <input type="text" placeholder="🔍 Buscar..." class="input">
+                <input type="date" class="input">
+                <input type="date" class="input">
+                <select class="input">
+                    <option>Estado</option>
+                    <option>Completado</option>
+                    <option>En curso</option>
+                </select>
+            </div>
+
+            <table class="viajes-table">
+                <thead>
+                    <tr>
+                        <th>Fecha</th>
+                        <th>Hora (Inicio - Fin)</th>
+                        <th>Ruta (Origen / Destino)</th>
+                        <th>Distancia</th>
+                        <th>Duración</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for viaje in viajes %}
+                    <tr>
+                        <td>{{ viaje.fecha }}</td>
+                        <td>{{ viaje.hora_inicio }} - {{ viaje.hora_fin }}</td>
+                        <td>[{{ viaje.origen }}] a [{{ viaje.destino }}]</td>
+                        <td>{{ viaje.distancia }} km</td>
+                        <td>{{ viaje.duracion }}</td>
+                    </tr>
+                    <tr class="detalle">
+                        <td colspan="5">
+                            <div class="detalle-contenido">
+                                <div class="mapa">
+                                    <img src="{% static 'img/mapa.png' %}" alt="Mapa del viaje">
+                                </div>
+                                <div class="estadisticas">
+                                    <h4>ESTADÍSTICAS:</h4>
+                                    <p>Velocidad promedio: {{ viaje.velocidad_promedio }} km/h</p>
+                                    <p>Combustible: {{ viaje.combustible }} L</p>
+                                    <p>{{ viaje.observaciones }}</p>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr><td colspan="5" class="no-data">No hay viajes registrados.</td></tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </main>
+    </div>
+</body>
+</html>

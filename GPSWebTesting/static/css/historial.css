@@ -1,0 +1,148 @@
+/* Estructura general */
+body {
+  margin: 0;
+  background: #1b1c1f;
+  color: white;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.container {
+  display: flex;
+  height: 100vh;
+}
+
+/* Barra lateral */
+.sidebar {
+  width: 220px;
+  background-color: #111217;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 25px;
+}
+
+.logo {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.logo-icon {
+  font-size: 28px;
+}
+
+.logo h2 {
+  font-size: 16px;
+  color: #f2f2f2;
+  margin-top: 5px;
+}
+
+.menu {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.menu a {
+  color: #e0e0e0;
+  text-decoration: none;
+  padding: 14px 0;
+  text-align: center;
+  border-left: 3px solid transparent;
+  transition: 0.3s;
+  font-size: 15px;
+}
+
+.menu a:hover,
+.menu a.active {
+  background-color: #23242a;
+  border-left: 3px solid #ff7b00;
+  color: #fff;
+}
+
+/* Contenido principal */
+.main-content {
+  flex: 1;
+  padding: 40px;
+}
+
+.main-content h1 {
+  text-align: center;
+  font-weight: 600;
+  margin-bottom: 30px;
+}
+
+/* Filtros */
+.filters {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-bottom: 25px;
+}
+
+.input {
+  background-color: #2c2d31;
+  border: none;
+  padding: 10px 15px;
+  color: #fff;
+  border-radius: 6px;
+  width: 180px;
+}
+
+/* Tabla */
+.viajes-table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #23242a;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.viajes-table th {
+  text-align: left;
+  background-color: #2b2c31;
+  padding: 12px;
+  font-weight: 500;
+  font-size: 14px;
+}
+
+.viajes-table td {
+  padding: 12px;
+  font-size: 14px;
+  border-top: 1px solid #333;
+}
+
+.viajes-table tr:hover {
+  background-color: #2f3035;
+}
+
+/* Detalle de viaje */
+.detalle-contenido {
+  display: flex;
+  align-items: flex-start;
+  gap: 20px;
+  background-color: #1d1e22;
+  padding: 15px;
+  border-radius: 6px;
+}
+
+.mapa img {
+  width: 200px;
+  height: 150px;
+  border-radius: 6px;
+}
+
+.estadisticas h4 {
+  color: #ff7b00;
+  margin-bottom: 10px;
+}
+
+.estadisticas p {
+  margin: 5px 0;
+  font-size: 13px;
+}
+
+.no-data {
+  text-align: center;
+  color: #aaa;
+  padding: 20px;
+}

@@ -1,0 +1,143 @@
+/* Reset general */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #1b1c1f;
+    color: white;
+    display: flex;
+    height: 100vh;
+}
+
+/* Estructura general */
+.container {
+    display: flex;
+    width: 100%;
+}
+
+/* Barra lateral */
+.sidebar {
+    width: 220px;
+    background-color: #111217;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 25px;
+}
+
+.logo {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.logo-icon {
+    font-size: 28px;
+}
+
+.logo h2 {
+    font-size: 16px;
+    color: #f2f2f2;
+    margin-top: 5px;
+    letter-spacing: 1px;
+}
+
+/* Menú lateral */
+.menu {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.menu a {
+    color: #e0e0e0;
+    text-decoration: none;
+    padding: 14px 0;
+    text-align: center;
+    border-left: 3px solid transparent;
+    transition: 0.3s;
+    font-size: 15px;
+}
+
+.menu a:hover,
+.menu a.active {
+    background-color: #23242a;
+    border-left: 3px solid #ff7b00;
+    color: #fff;
+}
+
+/* Contenido principal */
+.main-content {
+    flex: 1;
+    padding: 60px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.main-content h1 {
+    font-weight: 600;
+    margin-bottom: 60px;
+}
+
+/* Tarjetas del menú */
+.options {
+    display: flex;
+    gap: 40px;
+    justify-content: center;
+}
+
+.card {
+    width: 200px;
+    height: 130px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    cursor: pointer;
+    box-shadow: 0 3px 15px rgba(0,0,0,0.3);
+    transition: transform 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+}
+
+.card.orange {
+    background-color: #ff7b00;
+    color: white;
+}
+
+.card.white {
+    background-color: #f3f3f3;
+    color: #333;
+}
+
+.icon {
+    font-size: 40px;
+    margin-bottom: 10px;
+}
+
+/* Estado GPS */
+.gps-status {
+    position: absolute;
+    bottom: 20px;
+    left: 260px;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    color: #b2ffb2;
+}
+
+.dot {
+    width: 10px;
+    height: 10px;
+    background-color: #00ff00;
+    border-radius: 50%;
+    margin-right: 8px;
+}
