@@ -1,0 +1,102 @@
+/* Fondo con degradado */
+body {
+    margin: 0;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(135deg, #4e73df, #8e44ad);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Contenedor del formulario */
+.login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+/* Caja del formulario */
+.login-box {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 40px;
+    border-radius: 10px;
+    width: 350px;
+    text-align: center;
+    box-shadow: 0 4px 25px rgba(0, 0, 0, 0.2);
+}
+
+/* Icono superior */
+.user-icon {
+    font-size: 50px;
+    margin-bottom: 15px;
+}
+
+/* Título */
+h2 {
+    color: white;
+    margin-bottom: 25px;
+    font-weight: 500;
+}
+
+/* Etiquetas e inputs */
+label {
+    display: block;
+    color: white;
+    text-align: left;
+    margin-bottom: 5px;
+    font-size: 14px;
+}
+
+input[type="text"],
+input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 4px;
+    margin-bottom: 15px;
+}
+
+/* Opción recordar */
+.options {
+    text-align: left;
+    color: white;
+    font-size: 13px;
+    margin-bottom: 20px;
+}
+
+/* Botón */
+button {
+    background: #00d2ff;
+    border: none;
+    color: white;
+    width: 100%;
+    padding: 12px;
+    border-radius: 4px;
+    font-size: 15px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+button:hover {
+    background: #03a9f4;
+}
+
+/* Enlaces inferiores */
+.links {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.links a {
+    color: white;
+    font-size: 13px;
+    text-decoration: none;
+    transition: opacity 0.3s ease;
+}
+
+.links a:hover {
+    opacity: 0.8;
+}
