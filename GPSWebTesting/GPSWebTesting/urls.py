@@ -17,8 +17,12 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from Login.views import login
+<<<<<<< HEAD
 from Tecnicos.views import empleado
 #from Supervisor.views import 
+=======
+from Supervisor.views import SuperU
+>>>>>>> 177c0e599d5acda78c7c1c948dcb8510dda6c900
 #from Tecnicos.views import 
 
 urlpatterns = [
@@ -26,7 +30,7 @@ urlpatterns = [
     path('iniciar_sesion/', login, name="iniciar sesion"), #Pestaña de inicio de sesion
     path('menu_empleado/', empleado, name = "Menu"), #MENÚ DEL EMPLEADO
     #path('registrar/', register, name="registrar"), #Añadir registro
-    #path('/', , name=""), #Añadir Views de Supervisor
+    path('Supervisor/', SuperU, name="SuperUsuario"), #Añadir Views de Supervisor
     #path('GPS/', include('GPS.urls'), name=""), #Añadir GPS.
     #path ('/', , name=""), #Añadir view de tecnicos
 ]
