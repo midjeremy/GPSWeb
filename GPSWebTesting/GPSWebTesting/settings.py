@@ -44,6 +44,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'GPS',
     'rest_framework',
+    'Supervisor',
+    'Tecnicos',
+    'Login',
 ]
 
 MIDDLEWARE = [
@@ -79,14 +82,14 @@ WSGI_APPLICATION = 'GPSWebTesting.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME':'gpstest',
-        'USER': 'jeremy',
-        'PASSWORD':'admin'
-    }
-}
+#DATABASES = {
+#    'default': {
+#        'ENGINE': 'django.db.backends.mysql',
+#        'NAME':'gpstest',
+#        'USER': 'jeremy',
+#        'PASSWORD':'admin'
+#    }
+#}
 
 
 # Password validation
@@ -124,6 +127,10 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
 STATIC_URL = 'static/'
+
+STATICFILES_DIRS = [
+    BASE_DIR / "static",
+]
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
