@@ -17,14 +17,14 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from Login.views import login
-#from Supervisor.views import 
+from Supervisor.views import SuperU
 #from Tecnicos.views import 
 
 urlpatterns = [
     path('', include('GPS.urls')),
     path('iniciar_sesion/', login, name="iniciar sesion"), #Pestaña de inicio de sesion
     #path('registrar/', register, name="registrar"), #Añadir registro
-    #path('/', , name=""), #Añadir Views de Supervisor
+    path('Supervisor/', SuperU, name="SuperUsuario"), #Añadir Views de Supervisor
     #path('GPS/', include('GPS.urls'), name=""), #Añadir GPS.
     #path ('/', , name=""), #Añadir view de tecnicos
 ]
