@@ -79,14 +79,14 @@ WSGI_APPLICATION = 'GPSWebTesting.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME':'gpstest',
-        'USER': 'jeremy',
-        'PASSWORD':'admin'
-    }
-}
+#DATABASES = {
+#    'default': {
+#        'ENGINE': 'django.db.backends.mysql',
+#        'NAME':'gpstest',
+#        'USER': 'jeremy',
+#        'PASSWORD':'admin'
+#    }
+#}
 
 
 # Password validation
