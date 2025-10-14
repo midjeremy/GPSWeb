@@ -1,0 +1,71 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/UsuarioSup.css' %}">
+    <title>Vista de Usuario Supervisor</title>
+</head>
+<body>
+    <div class="headers">
+        <h1>Vista de Usuario Supervisor</h1>
+        <p>Bienvenido, Supervisor. Aquí puedes gestionar usuarios</p>
+    </div>
+
+    <div class="sidebar">
+        <h3>menu de Navegacion</h3>
+        <button class="nav-button" onclick="location.href='#'">Vista General</button>
+        <button class="nav-button" onclick="location.href='#'">Gestión de Usuarios</button>
+        <button class="nav-button" onclick="location.href='#'">Reportes</button>
+        <button class="nav-button" onclick="location.href='#'">Cerrar Sesión</button>
+    </div>
+
+    <div class="main-content">
+        <h2>Resumen de Usuario</h2>
+
+        <div class="dashboard-grid">
+            <div class="card">
+                <h3>Tatal de Usuarios</h3>
+                <p>0</p>
+            </div>
+
+            <div class="card">
+                <h3>Usuarios Activos</h3>
+                <p>0</p>
+            </div>
+
+            <div class="card">
+                <h3>Usuarios Inactivos</h3>
+                <p>0</p>
+            </div>
+
+            <div class="card">
+                <h3>Acciones recientes</h3>
+                <p>Ultima actualizacion: Hoy</p>
+            </div>
+        </div>
+
+        <h2>Lista de Usuarios</h2>
+        <div class="card">
+            <ul class="user-list">
+                <li class="user-item">
+                    <span>Usuario 1</span>
+                    <button>Editar</button>
+                    <button>Eliminar</button>
+                </li>
+                <li class="user-item">
+                    <span>Usuario 2</span>
+                    <button>Editar</button>
+                    <button>Eliminar</button>
+                </li>
+                <li class="user-item">
+                    <span>Usuario 3</span>
+                    <button>Editar</button>
+                    <button>Eliminar</button>
+                </li>
+            </ul>
+            <button style="margin-top: 10px;">Agregar Nuevo Usuario</button>
+        </div>
+    </div>
+</body>
