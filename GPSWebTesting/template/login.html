@@ -14,12 +14,13 @@
             <div class="user-icon">👤</div>
             <h2>Ingreso</h2>
 
-            <form>
+            <form method='POST'>
+                {% csrf_token %}
                 <label for="username">Usuario *</label>
-                <input type="text" id="username" placeholder="Ingresa tu usuario">
+                {{ form.username }}
 
                 <label for="password">Contraseña *</label>
-                <input type="password" id="password" placeholder="Ingresa tu contraseña">
+                {{ form.password }}
 
                 <div class="options">
                     <label><input type="checkbox"> Recordarme</label>
@@ -28,7 +29,6 @@
                 <button type="submit">INICIAR SESIÓN</button>
 
                 <div class="links">
-                    <a href="#">¿No tienes cuenta?</a>
                     <a href="#">¿Olvidaste tu contraseña?</a>
                 </div>
             </form>

@@ -46,7 +46,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'Supervisor',
     'Tecnicos',
-    'Login',
+    'accounts',
 ]
 
 MIDDLEWARE = [
@@ -92,6 +92,12 @@ DATABASES = {
         'PORT': '3306',
     }
 }
+
+AUTH_USER_MODEL = 'accounts.User'
+AUTHENTICATION_BACKENDS = [
+    'accounts.backends.EmailOrRutBackend',
+    'django.contrib.auth.backends.ModelBackend',
+]
 
 
 
