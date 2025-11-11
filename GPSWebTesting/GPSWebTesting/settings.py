@@ -30,7 +30,7 @@ SECRET_KEY = 'django-insecure-ritai7&cm$05+nzgnzsnt%n4@w#1(o$8x_k5k8zhss)wf2pz3=
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['26.79.106.44','0.0.0.0', '127.0.0.1']
 
 
 # Application definition
@@ -82,14 +82,17 @@ WSGI_APPLICATION = 'GPSWebTesting.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
-#DATABASES = {
-#    'default': {
-#        'ENGINE': 'django.db.backends.mysql',
-#        'NAME':'gpstest',
-#        'USER': 'jeremy',
-#        'PASSWORD':'admin'
-#    }
-#}
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'gpsweb',
+        'USER': 'django_user',
+        'PASSWORD': 'django_pass',
+        'HOST': '26.79.106.44',  # IP Radmin de tu servidor XAMPP
+        'PORT': '3306',
+    }
+}
+
 
 
 # Password validation
