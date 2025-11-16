@@ -1,7 +1,9 @@
 from django.contrib.auth import authenticate, login
 from django.shortcuts import render, redirect
 from .forms import LoginForm
+from django.contrib.auth import logout
 
+#iniciar sesion
 def login_view(request):
     form = LoginForm(request.POST or None)
     error = None
@@ -19,3 +21,8 @@ def login_view(request):
             else:
                 error = 'Credenciales incorrectas'
     return render(request, 'login.html', {'form': form, 'error': error})
+
+#cerrar sesion [Probar si funciona]
+def logout_view(request):
+    logout(request)
+    return redirect('login')
