@@ -6,7 +6,7 @@ from .forms import TecnicoForm
 #████████████[Vistas]████████████
 #Vista de html
 def empleado(request):
-    return render(request, 'empleado.html')
+    return render(request, 'reportes.html')
 
 #Listar
 def lista_Tecnico(request):
