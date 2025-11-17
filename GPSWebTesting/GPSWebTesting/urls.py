@@ -28,7 +28,7 @@ from Supervisor.views import SuperU
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('gps', include('GPS.urls')),
+    path('gps/', include('GPS.urls')),
     #path('', include('login.urls')),
     path('', include('accounts.urls')),
     #path('', login, name="iniciar sesion"), #Pestaña de inicio de sesion

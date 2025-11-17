@@ -1,4 +1,4 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
@@ -8,7 +8,14 @@
 </head>
 <body>
     <h2>Seguimiento GPS</h2>
+
     <button onclick="sendLocation()">Enviar mi ubicación</button>
+
+    <h3>Buscar Ruta</h3>
+    <input type="text" id="start" placeholder="Dirección de inicio" style="width: 250px;">
+    <input type="text" id="end" placeholder="Dirección de destino" style="width: 250px;">
+    <button onclick="searchRoute()">Obtener Ruta</button>
+
     <div id="map" style="height:400px; width:100%; margin-top:10px;"></div>
 
     <script>
@@ -16,7 +23,7 @@
         function sendLocation() {
             if (navigator.geolocation) {
                 navigator.geolocation.watchPosition(function(position) {
-                    fetch("/api/locations/", {
+                    fetch("/gps/api/locations/", {
                         method: "POST",
                         headers: {
                             "Content-Type": "application/json"
@@ -37,16 +44,72 @@
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
         var marker = L.marker([0, 0]).addTo(map);
 
+        // Marcadores y polyline para rutas
+        var startMarker = null;
+        var endMarker = null;
+        var routeLine = null;
+
         // --- Actualizar posición cada 5 segundos ---
         setInterval(async function() {
-            let res = await fetch("/api/locations/");
+            let res = await fetch("/gps/api/locations/");
             let data = await res.json();
+
             if (data.length > 0) {
-                let last = data[0]; // último guardado (por order_by)
+                let last = data[0]; // último guardado
                 marker.setLatLng([last.latitude, last.longitude]);
                 map.setView([last.latitude, last.longitude]);
             }
         }, 5000);
+
+        // --- Obtener corrdenadas con direcciones ---
+        async function getRouteFromAddresses(startAddress, endAddress) {
+            const res = await fetch("/gps/api/locations/route/", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    start_address: startAddress,
+                    end_address: endAddress
+                })
+            });
+
+            return await res.json();
+        }
+
+        // --- buscar Ruta y mostrar en el mapa ---
+        async function searchRoute() {
+            let startAddress = document.getElementById("start").value;
+            let endAddress = document.getElementById("end").value;
+
+            if (!startAddress || !endAddress) {
+                alert("Por favor ingresa ambas direcciones");
+                return;
+            }
+
+            let route = await getRouteFromAddresses(startAddress, endAddress);
+
+            if (route.error) {
+                alert("No se pudo encontrar la ruta");
+                return;
+            }
+
+            // Eliminar ruta anterior Existente
+            if (startMarker) map.removeLayer(startMarker);
+            if (endMarker) map.removeLayer(endMarker);
+            if (routeLine) map.removeLayer(routeLine);
+
+            let start = [route.start.latitude, route.start.longitude];
+            let end = [route.end.latitude, route.end.longitude];
+
+            // Marcadores
+            startMarker = L.marker(start).addTo(map).bindPopup("Inicio");
+            endMarker = L.marker(end).addTo(map).bindPopup("Destino");
+
+            // Dibujar una línea simple entre ambos puntos
+            routeLine = L.polyline([start, end]).addTo(map);
+
+            // Ajustar zoom para ver la ruta completa
+            map.fitBounds([start, end]);
+        }
     </script>
 </body>
 </html>
