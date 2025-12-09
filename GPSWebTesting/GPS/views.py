@@ -72,7 +72,7 @@ class LocationViewSet(viewsets.ModelViewSet):
                 status=status.HTTP_400_BAD_REQUEST
             )
 
-        # 1. Tomar la ubicación más reciente del GPS
+        #Tomar la ubicación más reciente del GPS
         try:
             current_location = Location.objects.latest("updated_at")
         except Location.DoesNotExist:
@@ -86,7 +86,7 @@ class LocationViewSet(viewsets.ModelViewSet):
             "longitude": current_location.longitude
         }
 
-        # 2. Obtener coordenadas del destino
+        #Obtener coordenadas del destino
         end_coords = self.geocode(destination_address)
 
         if not end_coords:

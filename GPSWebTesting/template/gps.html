@@ -25,9 +25,7 @@
     <div id="map" style="height:400px; width:100%; margin-top:10px;"></div>
 
     <script>
-        // ================================
-        // 1. ENVIAR UBICACIÓN ACTUAL
-        // ================================
+        // ENVIAR UBICACIÓN ACTUAL
         function sendLocation() {
             if (navigator.geolocation) {
                 navigator.geolocation.watchPosition(function(position) {
@@ -45,9 +43,7 @@
             }
         }
 
-        // ================================
-        // 2. CONFIGURAR MAPA
-        // ================================
+        // CONFIGURAR MAPA
         var map = L.map('map').setView([0, 0], 15);
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
 
@@ -55,9 +51,7 @@
         var endMarker = null;
         var routeLine = null;
 
-        // ================================
-        // 3. ACTUALIZAR GPS AUTOMÁTICO
-        // ================================
+        // ACTUALIZAR GPS AUTOMÁTICO
         setInterval(async function() {
             let res = await fetch("/gps/api/locations/");
             let data = await res.json();
@@ -78,9 +72,7 @@
             }
         }, 5000);
 
-        // =====================================================
-        // 4. OBTENER COORDENADAS DESDE DIRECCIONES (GEOCODING)
-        // =====================================================
+        // OBTENER COORDENADAS DESDE DIRECCIONES (GEOCODING)
         async function getRouteFromAddresses(startAddress, endAddress) {
             const res = await fetch("/gps/api/locations/route/", {
                 method: "POST",
@@ -160,7 +152,7 @@
             map.fitBounds([marker.getLatLng(), endPos]);
         }
 
-        // 8. CARGAR RUTAS GUARDADAS DESDE LA BD
+        // CARGAR RUTAS GUARDADAS DESDE LA BD
         async function loadSavedRoutes() {
             let res = await fetch("/gps/api/routes/");
             let routes = await res.json();
