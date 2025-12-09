@@ -11,23 +11,29 @@
 
     <button onclick="sendLocation()">Enviar mi ubicación</button>
 
-    <h3>Buscar Ruta</h3>
+    <h3>Buscar Ruta Manual</h3>
     <input type="text" id="start" placeholder="Dirección de inicio" style="width: 250px;">
     <input type="text" id="end" placeholder="Dirección de destino" style="width: 250px;">
     <button onclick="searchRoute()">Obtener Ruta</button>
 
+    <h3>Rutas Guardadas</h3>
+    <select id="routesList" style="width:300px;">
+        <option value="">-- Selecciona una ruta guardada --</option>
+    </select>
+    <button onclick="useSavedRoute()">Usar Ruta Guardada</button>
+
     <div id="map" style="height:400px; width:100%; margin-top:10px;"></div>
 
     <script>
-        // --- Enviar ubicación cada 5 segundos ---
+        // ================================
+        // 1. ENVIAR UBICACIÓN ACTUAL
+        // ================================
         function sendLocation() {
             if (navigator.geolocation) {
                 navigator.geolocation.watchPosition(function(position) {
                     fetch("/gps/api/locations/", {
                         method: "POST",
-                        headers: {
-                            "Content-Type": "application/json"
-                        },
+                        headers: { "Content-Type": "application/json" },
                         body: JSON.stringify({
                             latitude: position.coords.latitude,
                             longitude: position.coords.longitude
@@ -39,29 +45,42 @@
             }
         }
 
-        // --- Configurar mapa Leaflet ---
+        // ================================
+        // 2. CONFIGURAR MAPA
+        // ================================
         var map = L.map('map').setView([0, 0], 15);
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
-        var marker = L.marker([0, 0]).addTo(map);
 
-        // Marcadores y polyline para rutas
-        var startMarker = null;
+        var marker = L.marker([0, 0]).addTo(map);
         var endMarker = null;
         var routeLine = null;
 
-        // --- Actualizar posición cada 5 segundos ---
+        // ================================
+        // 3. ACTUALIZAR GPS AUTOMÁTICO
+        // ================================
         setInterval(async function() {
             let res = await fetch("/gps/api/locations/");
             let data = await res.json();
 
             if (data.length > 0) {
-                let last = data[0]; // último guardado
-                marker.setLatLng([last.latitude, last.longitude]);
-                map.setView([last.latitude, last.longitude]);
+                let pos = [data[0].latitude, data[0].longitude];
+
+                marker.setLatLng(pos);
+                map.setView(pos);
+
+                if (routeLine && endMarker) {
+                    map.removeLayer(routeLine);
+                    routeLine = L.polyline([
+                        pos,
+                        endMarker.getLatLng()
+                    ]).addTo(map);
+                }
             }
         }, 5000);
 
-        // --- Obtener corrdenadas con direcciones ---
+        // =====================================================
+        // 4. OBTENER COORDENADAS DESDE DIRECCIONES (GEOCODING)
+        // =====================================================
         async function getRouteFromAddresses(startAddress, endAddress) {
             const res = await fetch("/gps/api/locations/route/", {
                 method: "POST",
@@ -75,41 +94,90 @@
             return await res.json();
         }
 
-        // --- buscar Ruta y mostrar en el mapa ---
+        // BUSCAR RUTA Y GUARDARLA EN LA BASE DE DATOS
         async function searchRoute() {
             let startAddress = document.getElementById("start").value;
             let endAddress = document.getElementById("end").value;
 
             if (!startAddress || !endAddress) {
-                alert("Por favor ingresa ambas direcciones");
+                alert("Ingresa inicio y destino");
                 return;
             }
 
             let route = await getRouteFromAddresses(startAddress, endAddress);
 
             if (route.error) {
-                alert("No se pudo encontrar la ruta");
+                alert("No se pudo obtener la ruta");
                 return;
             }
 
-            // Eliminar ruta anterior Existente
-            if (startMarker) map.removeLayer(startMarker);
+            drawRoute(route.start, route.end);
+
+            // GUARDAR RUTA EN BD
+            await fetch("/gps/api/routes/", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    start_lat: route.start.latitude,
+                    start_lon: route.start.longitude,
+                    end_lat: route.end.latitude,
+                    end_lon: route.end.longitude
+                })
+            });
+
+            alert("Ruta guardada");
+            loadSavedRoutes();
+        }
+
+        // USAR RUTA GUARDADA
+        function useSavedRoute() {
+            let value = document.getElementById("routesList").value;
+
+            if (!value) {
+                alert("Selecciona una ruta guardada");
+                return;
+            }
+
+            let [sLat, sLon, eLat, eLon] = value.split(",");
+
+            drawRoute(
+                { latitude: parseFloat(sLat), longitude: parseFloat(sLon) },
+                { latitude: parseFloat(eLat), longitude: parseFloat(eLon) }
+            );
+        }
+
+        // DIBUJAR RUTA EN EL MAPA
+        function drawRoute(start, end) {
             if (endMarker) map.removeLayer(endMarker);
             if (routeLine) map.removeLayer(routeLine);
 
-            let start = [route.start.latitude, route.start.longitude];
-            let end = [route.end.latitude, route.end.longitude];
+            let endPos = [end.latitude, end.longitude];
 
-            // Marcadores
-            startMarker = L.marker(start).addTo(map).bindPopup("Inicio");
-            endMarker = L.marker(end).addTo(map).bindPopup("Destino");
+            endMarker = L.marker(endPos).addTo(map).bindPopup("Destino");
 
-            // Dibujar una línea simple entre ambos puntos
-            routeLine = L.polyline([start, end]).addTo(map);
+            routeLine = L.polyline([marker.getLatLng(), endPos]).addTo(map);
 
-            // Ajustar zoom para ver la ruta completa
-            map.fitBounds([start, end]);
+            map.fitBounds([marker.getLatLng(), endPos]);
         }
+
+        // 8. CARGAR RUTAS GUARDADAS DESDE LA BD
+        async function loadSavedRoutes() {
+            let res = await fetch("/gps/api/routes/");
+            let routes = await res.json();
+
+            let list = document.getElementById("routesList");
+            list.innerHTML = `<option value="">-- Selecciona una ruta guardada --</option>`;
+
+            routes.forEach(r => {
+                list.innerHTML += `
+                    <option value="${r.start_lat},${r.start_lon},${r.end_lat},${r.end_lon}">
+                        Ruta ${r.id} - ${r.created_at}
+                    </option>
+                `;
+            });
+        }
+
+        loadSavedRoutes();
     </script>
 </body>
 </html>
